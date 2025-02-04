@@ -23,5 +23,11 @@ export default {
   getTopRatedTVShows() {
     return apiClient.get('/tv/top_rated');
   },
+  searchMovies(query) {
+    return apiClient.get('/search/movie', {
+      params: {
+        query,
+      },
+    });
+  },
 };
-
