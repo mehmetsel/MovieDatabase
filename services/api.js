@@ -10,24 +10,32 @@ const apiClient = axios.create({
   },
 });
 
-export default {
-  getPopularMovies() {
-    return apiClient.get('/movie/popular');
-  },
-  getTopRatedMovies() {
-    return apiClient.get('/movie/top_rated');
-  },
-  getPopularTVShows() {
-    return apiClient.get('/tv/popular');
-  },
-  getTopRatedTVShows() {
-    return apiClient.get('/tv/top_rated');
-  },
-  searchMovies(query) {
-    return apiClient.get('/search/movie', {
-      params: {
-        query,
-      },
-    });
-  },
-};
+export function fetchPopularMovies() {
+  return apiClient.get('/movie/popular');
+}
+
+export function fetchUpcomingMovies() {
+  return apiClient.get('/movie/upcoming');
+}
+
+export function fetchTopRatedMovies() {
+  return apiClient.get('/movie/top_rated');
+}
+
+export function fetchPopularTVShows() {
+  return apiClient.get('/tv/popular');
+}
+
+export function fetchUpcomingTVShows() {
+  return apiClient.get('/tv/on_the_air');
+}
+
+export function fetchTopRatedTVShows() {
+  return apiClient.get('/tv/top_rated');
+}
+
+export function searchMovies(query) {
+  return apiClient.get('/search/movie', {
+    params: { query },
+  });
+}
