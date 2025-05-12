@@ -32,16 +32,18 @@
     <main class="flex-1 p-6">
       <h1 class="text-3xl font-bold mb-6">{{ title }}</h1>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div v-for="item in filteredAndSortedItems" :key="item.id" class="bg-white dark:bg-zinc-800 shadow rounded-xl p-3 hover:shadow-lg transition">
-          <img :src="getImage(item.poster_path)" alt="Poster" class="rounded-xl mb-3">
-          <h2 class="text-lg font-semibold line-clamp-1">{{ item.title || item.name }}</h2>
-          <p class="text-sm text-gray-600 dark:text-gray-300">Rating: {{ item.vote_average.toFixed(1) }}</p>
-          <p class="text-sm text-gray-600 dark:text-gray-300">Release: {{ item.release_date || item.first_air_date }}</p>
-          <button @click="toggle(item)" class="mt-2 text-red-500 hover:text-red-700 text-sm">
-            <span v-if="isFavourite(item.id)">💔 Remove</span>
-            <span v-else>❤️ Favourite</span>
-          </button>
-        </div>
+        <NuxtLink v-for="item in filteredAndSortedItems" :key="item.id" :to="`/${mediaType}/${item.id}`" class="block hover:opacity-90 transition">
+          <div class="bg-white dark:bg-zinc-800 shadow rounded-xl p-3">
+            <img :src="getImage(item.poster_path)" alt="Poster" class="rounded-xl mb-3">
+            <h2 class="text-lg font-semibold line-clamp-1">{{ item.title || item.name }}</h2>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Rating: {{ item.vote_average.toFixed(1) }}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Release: {{ item.release_date || item.first_air_date }}</p>
+            <button @click.stop="toggle(item)" class="mt-2 text-red-500 hover:text-red-700 text-sm">
+              <span v-if="isFavourite(item.id)">💔 Remove</span>
+              <span v-else>❤️ Favourite</span>
+            </button>
+          </div>
+        </NuxtLink>
       </div>
     </main>
   </div>
@@ -94,6 +96,8 @@ watch(() => route.fullPath, async () => {
 
 const toggle = (item) => favourites.toggle(item)
 const isFavourite = (id) => favourites.isFavourite(id)
+
+const mediaType = computed(() => props.title.includes('TV') ? 'tvshows' : 'movies')
 
 const filteredAndSortedItems = computed(() => {
   let list = [...items.value]

@@ -39,3 +39,15 @@ export function searchMovies(query) {
     params: { query },
   });
 }
+
+export function getMovieDetails(id) {
+  return apiClient.get(`/movie/${id}`, {
+    params: { append_to_response: 'credits' },
+  });
+}
+
+export function getTVDetails(id) {
+  return apiClient.get(`/tv/${id}`, {
+    params: { append_to_response: 'credits' },
+  });
+}
